@@ -22,7 +22,11 @@ const getData = async() => {
     user.appendChild(deleteButton)
     
     // Update Button
-    
+    let updateButton = document.createElement("button");
+    updateButton.setAttribute("onclick", "updateData("+ result.id +")")
+    let textUpdateButton = document.createTextNode("Update");
+    updateButton.appendChild(textUpdateButton)
+    user.appendChild(updateButton)
   })
 }
 getData()
@@ -76,6 +80,18 @@ const deleteData = async(id) => {
 
 
 // update data api
-const updateData = () => {
-  console.log(id)
+const updateData = async(id) => {
+  const api = "https://6023a95a6bf3e6001766b546.mockapi.io/todos"
+  const dataUpdate = prompt("Please input your new user name:")
+  const updateDataObj = {
+    name: dataUpdate
+  }
+  
+  const response = await fetch(api+"/"+id, {
+    method: "PUT",
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(updateDataObj)
+  })
+  const result = await response.json();
+  getData()
 }
