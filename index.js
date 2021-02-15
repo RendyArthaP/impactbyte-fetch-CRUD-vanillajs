@@ -4,17 +4,25 @@ const getData = async() => {
 
   let response = await fetch(api)
   let results = await response.json()
+  let user = document.querySelector(".list-user")
+
+  user.innerHTML = "";
 
   results.map((result) => {
-    let user = document.querySelector(".list-user")
     let list = document.createElement("p")
 
-    list.innerHTML = `
-      <p>${result.name}</p>
-      <button id="delete-button">Delete</button>
-      <button id="update-button">Update</button>
-    `
+    list.innerHTML = `<p>${result.name}</p>`
     user.appendChild(list)
+
+    // Delete Button
+    let deleteButton = document.createElement("button");
+    deleteButton.setAttribute("onclick", "deleteData("+ result.id + ")")
+    let textDeleteButton = document.createTextNode("Delete");
+    deleteButton.appendChild(textDeleteButton)
+    user.appendChild(deleteButton)
+    
+    // Update Button
+    
   })
 }
 getData()
@@ -56,4 +64,18 @@ const addData = async(e) => {
 addButton.addEventListener("click", addData)
 
 // delete data api
-let deleteButton = document.querySelector("")
+const deleteData = async(id) => {
+  const api = "https://6023a95a6bf3e6001766b546.mockapi.io/todos"
+  const response = await fetch(api+"/"+id, {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"},
+  })
+  const result = await response.json();
+  getData()
+}
+
+
+// update data api
+const updateData = () => {
+  console.log(id)
+}
