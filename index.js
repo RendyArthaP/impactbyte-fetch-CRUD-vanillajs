@@ -70,14 +70,19 @@ addButton.addEventListener("click", addData)
 // delete data api
 const deleteData = async(id) => {
   const api = "https://6023a95a6bf3e6001766b546.mockapi.io/todos"
-  const response = await fetch(api+"/"+id, {
-    method: "DELETE",
-    headers: {"Content-Type": "application/json"},
-  })
-  const result = await response.json();
-  getData()
+  try {
+    const response = await fetch(api+"/"+id, {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"},
+    })
+    const result = await response.json();
+    getData()
+  } catch(error) {
+    console.log(error)
+    alert("Server Error")
+  }
+  
 }
-
 
 // update data api
 const updateData = async(id) => {
@@ -86,12 +91,16 @@ const updateData = async(id) => {
   const updateDataObj = {
     name: dataUpdate
   }
-  
-  const response = await fetch(api+"/"+id, {
-    method: "PUT",
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(updateDataObj)
-  })
-  const result = await response.json();
-  getData()
+  try {
+    const response = await fetch(api+"/"+id, {
+      method: "PUT",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(updateDataObj)
+    })
+    const result = await response.json();
+    getData()
+  } catch(error) {
+    console.log(error)
+    alert("Server Error")
+  }
 }
